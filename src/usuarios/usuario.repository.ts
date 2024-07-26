@@ -1,4 +1,4 @@
-import { Usuario } from './usuario.interface';
+import { Usuario } from './interfaces/usuario.interface';
 
 export class UsuarioRepository {
   async getUsuarioById(id: string): Promise<Usuario> {
