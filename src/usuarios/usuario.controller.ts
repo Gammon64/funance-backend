@@ -7,8 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { UsuarioService } from './usuario.service';
 import { Usuario } from './interfaces/usuario.interface';
+import { UsuarioService } from './usuario.service';
 
 @Controller('usuarios')
 export class UsuarioController {

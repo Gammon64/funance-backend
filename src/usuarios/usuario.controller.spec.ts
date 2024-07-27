@@ -1,8 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import {
+  BELTRANO,
+  CICLANO,
+  FULANO,
+  INVALIDO,
+  USUARIOS,
+} from 'common/usuario.const';
 import { UsuarioController } from './usuario.controller';
 import { UsuarioService } from './usuario.service';
-import { Usuario } from './interfaces/usuario.interface';
-import { BELTRANO, CICLANO, FULANO } from 'common/usuario.const';
 
 describe('UsuarioController', () => {
   let usuarioController: UsuarioController;
@@ -18,9 +23,7 @@ describe('UsuarioController', () => {
 
   describe('getUsuarios', () => {
     it('should return an array of usuarios', () => {
-      const result: Usuario[] = [FULANO, CICLANO, BELTRANO];
-
-      expect(usuarioController.getUsuarios()).toEqual(result);
+      expect(usuarioController.getUsuarios()).toEqual(USUARIOS);
     });
   });
 
@@ -44,6 +47,12 @@ describe('UsuarioController', () => {
     it('should throw an error if the email is already in use', () => {
       expect(() => usuarioController.createUsuario(FULANO)).toThrow(
         'Email already in use',
+      );
+    });
+
+    it('should throw an error if the fields are not valid', () => {
+      expect(() => usuarioController.createUsuario(INVALIDO)).toThrow(
+        'Invalid fields',
       );
     });
   });
