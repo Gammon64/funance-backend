@@ -30,4 +30,4 @@ export const BELTRANO: Usuario = {
   senha: '123456',
 };
 
-export const USUARIOS: Usuario[] = [FULANO, CICLANO, BELTRANO];
+export const USUARIOS: Usuario[] = [FULANO, CICLANO];

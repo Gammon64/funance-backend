@@ -5,7 +5,7 @@ import {
   FULANO,
   INVALIDO,
   USUARIOS,
-} from 'common/usuario.const';
+} from '../common/usuario.const';
 import { UsuarioController } from './usuario.controller';
 import { UsuarioService } from './usuario.service';
 
@@ -23,63 +23,78 @@ describe('UsuarioController', () => {
 
   describe('getUsuarios', () => {
     it('should return an array of usuarios', () => {
-      expect(usuarioController.getUsuarios()).toEqual(USUARIOS);
+      usuarioController
+        .getUsuarios()
+        .then((data) => expect(data).toEqual(USUARIOS));
     });
   });
 
   describe('getUsuarioById', () => {
-    it('should return the usuario with the given id', () => {
-      expect(usuarioController.getUsuarioById(FULANO.id)).toEqual(FULANO);
+    it('should return the usuario with the given id', async () => {
+      expect(await usuarioController.getUsuarioById(FULANO.id)).toEqual(FULANO);
     });
   });
 
   describe('getUsuarioByEmail', () => {
-    it('should return the usuario with the given email', () => {
-      expect(usuarioController.getUsuarioByEmail(FULANO.email)).toEqual(FULANO);
+    it('should return the usuario with the given email', async () => {
+      expect(await usuarioController.getUsuarioByEmail(FULANO.email)).toEqual(
+        FULANO,
+      );
     });
   });
 
   describe('createUsuario', () => {
-    it('should create a new usuario', () => {
-      expect(usuarioController.createUsuario(BELTRANO)).toEqual(BELTRANO);
+    it('should create a new usuario', async () => {
+      expect(await usuarioController.createUsuario(BELTRANO)).toEqual(BELTRANO);
     });
 
-    it('should throw an error if the email is already in use', () => {
-      expect(() => usuarioController.createUsuario(FULANO)).toThrow(
-        'Email already in use',
-      );
+    test('should throw an error if the email is already in use', async () => {
+      await expect(usuarioController.createUsuario(FULANO)).rejects.toThrow();
     });
 
-    it('should throw an error if the fields are not valid', () => {
-      expect(() => usuarioController.createUsuario(INVALIDO)).toThrow(
+    test('should throw an error if the fields are not valid', async () => {
+      await expect(usuarioController.createUsuario(INVALIDO)).rejects.toThrow(
         'Invalid fields',
       );
     });
   });
 
   describe('updateUsuario', () => {
-    it('should update the usuario with the given id', () => {
-      expect(usuarioController.updateUsuario(FULANO.id, BELTRANO)).toEqual(
-        BELTRANO,
-      );
+    it('should update the usuario with the given id', async () => {
+      expect(
+        await usuarioController.updateUsuario(FULANO.id, BELTRANO),
+      ).toEqual(BELTRANO);
     });
 
-    it('should throw an error if the user is not found', () => {
-      expect(() => usuarioController.updateUsuario('0', BELTRANO)).toThrow(
+    it('should throw an error if the email is already in use', async () => {
+      expect(
+        async () => await usuarioController.updateUsuario(FULANO.id, CICLANO),
+      ).rejects.toThrow('Email already in use');
+    });
+
+    it('should throw an error if the fields are not valid', async () => {
+      expect(
+        async () => await usuarioController.updateUsuario(FULANO.id, INVALIDO),
+      ).rejects.toThrow('Invalid fields');
+    });
+
+    it('should throw an error if the user is not found', async () => {
+      expect(usuarioController.updateUsuario('0', BELTRANO)).rejects.toThrow(
         'User not found',
-      );
-    });
-
-    it('should throw an error if the email is already in use', () => {
-      expect(() => usuarioController.updateUsuario(FULANO.id, CICLANO)).toThrow(
-        'Email already in use',
       );
     });
   });
 
   describe('deleteUsuario', () => {
-    it('should delete the usuario with the given id', () => {
-      expect(usuarioController.deleteUsuario(FULANO.id)).not.toThrow();
+    it('should delete the usuario with the given id', async () => {
+      await usuarioController.deleteUsuario(FULANO.id);
+      expect(await usuarioController.getUsuarios()).not.toContainEqual(FULANO);
+    });
+
+    it('should throw an error if the user is not found', async () => {
+      expect(
+        async () => await usuarioController.deleteUsuario('0'),
+      ).rejects.toThrow('User not found');
     });
   });
 });
