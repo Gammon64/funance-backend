@@ -1,5 +1,11 @@
 import { Usuario } from 'src/usuarios/interfaces/usuario.interface';
 
+export const INVALIDO: Usuario = {
+  nome: '',
+  email: '',
+  senha: '',
+};
+
 export const FULANO: Usuario = {
   id: '1',
   timestamp: new Date(),
@@ -23,3 +29,5 @@ export const BELTRANO: Usuario = {
   email: 'beltrano@funance.com',
   senha: '123456',
 };
+
+export const USUARIOS: Usuario[] = [FULANO, CICLANO, BELTRANO];

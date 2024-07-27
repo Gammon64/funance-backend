@@ -55,6 +55,12 @@ describe('UsuarioController', () => {
       );
     });
 
+    it('should throw an error if the user is not found', () => {
+      expect(() => usuarioController.updateUsuario('0', BELTRANO)).toThrow(
+        'User not found',
+      );
+    });
+
     it('should throw an error if the email is already in use', () => {
       expect(() => usuarioController.updateUsuario(FULANO.id, CICLANO)).toThrow(
         'Email already in use',

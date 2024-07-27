@@ -1,59 +1,33 @@
+import { BELTRANO, CICLANO, FULANO, USUARIOS } from 'common/usuario.const';
 import { Usuario } from './interfaces/usuario.interface';
 
 export class UsuarioRepository {
   async getUsuarioById(id: string): Promise<Usuario> {
-    return {
-      id,
-      timestamp: new Date(),
-      nome: 'Fulano',
-      email: 'fulano@funance.com',
-      senha: '123456',
-    };
+    return USUARIOS.find((usuario) => usuario.id === id);
   }
 
   async getUsuarioByEmail(email: string): Promise<Usuario> {
-    return {
-      id: '1',
-      timestamp: new Date(),
-      nome: 'Fulano',
-      email,
-      senha: '123456',
-    };
+    return USUARIOS.find((usuario) => usuario.email === email);
   }
 
   async getUsuarios(): Promise<Usuario[]> {
-    return [
-      {
-        id: '1',
-        timestamp: new Date(),
-        nome: 'Fulano',
-        email: 'fulano@funance.com',
-        senha: '123456',
-      },
-      {
-        id: '2',
-        timestamp: new Date(),
-        nome: 'Ciclano',
-        email: 'ciclano@funance.com',
-        senha: '123456',
-      },
-      {
-        id: '3',
-        timestamp: new Date(),
-        nome: 'Beltrano',
-        email: 'beltrano@funance.com',
-        senha: '123456',
-      },
-    ];
+    return USUARIOS;
   }
 
   async createUsuario(usuario: Usuario): Promise<Usuario> {
+    if (USUARIOS.find((u) => u.email === usuario.email))
+      throw new Error('Email already in use');
     return usuario;
   }
 
   async updateUsuario(id: string, usuario: Usuario): Promise<Usuario> {
+    if (USUARIOS.find((u) => u.email === usuario.email))
+      throw new Error('Email already in use');
+    if (!USUARIOS.find((u) => u.id === id)) throw new Error('User not found');
     return usuario;
   }
 
-  async deleteUsuario(id: string): Promise<void> {}
+  async deleteUsuario(id: string): Promise<void> {
+    if (!USUARIOS.find((u) => u.id === id)) throw new Error('User not found');
+  }
 }
