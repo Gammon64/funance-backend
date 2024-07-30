@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { MovimentacaoService } from './movimentacao.service';
-import { Movimentacao } from './movimentacao.interface';
+import { Movimentacao } from './interfaces/movimentacao.interface';
 
 @Controller('movimentacoes')
 export class MovimentacaoController {

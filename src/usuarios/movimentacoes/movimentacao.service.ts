@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Movimentacao } from './movimentacao.interface';
-import { Agendamento } from './agendamentos/agendamento.interface';
+import { Movimentacao } from './interfaces/movimentacao.interface';
 import { MovimentacaoRepository } from './movimentacao.repository';
+import { Agendamento } from './agendamentos/interfaces/agendamento.interface';
+import { AgendamentoRepository } from './agendamentos/agendamento.repository';
 
 @Injectable()
 export class MovimentacaoService {
-  constructor(private movimentacaoRepository: MovimentacaoRepository) {}
+  constructor(
+    private readonly movimentacaoRepository: MovimentacaoRepository,
+    private readonly agendamentoRepository: AgendamentoRepository,
+  ) {}
 
   async getMovimentacoes(usuario_id: string) {
     return this.movimentacaoRepository.getMovimentacoesByUsuarioId(usuario_id);
@@ -15,16 +19,8 @@ export class MovimentacaoService {
     return this.movimentacaoRepository.getMovimentacaoById(id);
   }
 
-  async createMovimentacao(
-    movimentacao: Movimentacao,
-    agendamento?: Agendamento,
-  ) {
-    // Confere se tem agendamento
-    if (agendamento) {
-      // Cria o agendamento e as movimentações subsequentes
-      // agendamento = createAgendamento(agendamento);
-      // movimentacao.agendamento_id = agendamento.getId();
-    }
+  async createMovimentacao(movimentacao: Movimentacao) {
+    // Cria as parcelas
 
     return this.movimentacaoRepository.createMovimentacao(movimentacao);
   }

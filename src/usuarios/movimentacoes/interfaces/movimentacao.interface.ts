@@ -1,4 +1,4 @@
-import { TipoMovimentacao } from './enums/tipomovimentacao.enum';
+import { TipoMovimentacao } from '../enums/tipomovimentacao.enum';
 
 export interface Movimentacao {
   id?: string;
