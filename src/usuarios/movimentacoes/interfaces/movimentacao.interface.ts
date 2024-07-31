@@ -9,7 +9,8 @@ export interface Movimentacao {
   descricao: string;
   valor: number;
   pagamento: string;
+  assinatura: boolean;
+  qtd_parcelas: number;
   categoria?: string;
-  parcela?: number;
   agendamento_id?: string;
 }

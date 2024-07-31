@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Movimentacao } from './interfaces/movimentacao.interface';
 import { MovimentacaoRepository } from './movimentacao.repository';
-import { Agendamento } from './agendamentos/interfaces/agendamento.interface';
-import { AgendamentoRepository } from './agendamentos/agendamento.repository';
+import { ParcelaRepository } from './parcelas/parcela.repository';
 
 @Injectable()
 export class MovimentacaoService {
   constructor(
     private readonly movimentacaoRepository: MovimentacaoRepository,
-    private readonly agendamentoRepository: AgendamentoRepository,
+    private readonly parcelaRepository: ParcelaRepository,
   ) {}
 
   async getMovimentacoes(usuario_id: string) {
@@ -21,6 +20,15 @@ export class MovimentacaoService {
 
   async createMovimentacao(movimentacao: Movimentacao) {
     // Cria as parcelas
+    for (let i = 1; i <= movimentacao.qtd_parcelas; i++) {
+      const parcela = {
+        movimentacao_id: movimentacao.id,
+        numero: i,
+        valor: movimentacao.valor / movimentacao.qtd_parcelas,
+        data_vencimento: new Date(),
+      };
+      await this.parcelaRepository.createParcela(parcela);
+    }
 
     return this.movimentacaoRepository.createMovimentacao(movimentacao);
   }
