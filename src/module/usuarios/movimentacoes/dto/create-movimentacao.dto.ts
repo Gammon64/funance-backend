@@ -1,16 +1,13 @@
 import { TipoMovimentacao } from '../enums/tipomovimentacao.enum';
 
-export interface Movimentacao {
-  id?: string;
-  timestamp?: Date;
+export class CreateMovimentacaoDto {
   usuario_id: string;
-
   tipo: TipoMovimentacao;
   descricao: string;
   valor: number;
   pagamento: string;
-  assinatura: boolean;
-  qtd_parcelas: number;
+  assinatura: boolean = false;
+  qtd_parcelas: number = 1;
   categoria?: string;
   agendamento_id?: string;
 }
