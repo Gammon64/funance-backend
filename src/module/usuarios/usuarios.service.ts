@@ -1,32 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { UsuarioDto } from './dto/usuario.dto';
-import { UsuarioRepository } from './usuarios.repository';
+import { InjectModel } from '@nestjs/mongoose';
+import { Usuario } from './entities/usuario.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsuariosService {
-  constructor(private readonly usuarioRepository: UsuarioRepository) {}
+  constructor(
+    @InjectModel(Usuario.name)
+    private readonly usuarioModel: Model<Usuario>,
+  ) {}
 
   async findAll() {
-    return this.usuarioRepository.findAll();
+    return this.usuarioModel.find().exec();
   }
 
   async findOne(id: string) {
-    return this.usuarioRepository.findById(id);
+    return this.usuarioModel.findById(id);
   }
 
   async findByEmail(email: string) {
-    return this.usuarioRepository.findByEmail(email);
+    return this.usuarioModel.findOne({ email });
   }
 
   async create(createUsuarioDto: UsuarioDto) {
-    return this.usuarioRepository.create(createUsuarioDto);
+    const createdUsuario = new this.usuarioModel(createUsuarioDto);
+    return createdUsuario.save();
   }
 
   async update(id: string, updateUsuarioDto: UsuarioDto) {
-    return this.usuarioRepository.update(id, updateUsuarioDto);
+    return this.usuarioModel.updateOne({
+      ...updateUsuarioDto,
+      id,
+    });
   }
 
-  remove(id: string) {
-    return this.usuarioRepository.delete(id);
+  async remove(id: string) {
+    return this.usuarioModel.findByIdAndDelete(id);
   }
 }

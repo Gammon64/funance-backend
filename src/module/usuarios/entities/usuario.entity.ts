@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Movimentacao } from '../movimentacoes/entities/movimentacao.entity';
+
+export type UsuarioDocument = HydratedDocument<Usuario>;
 
 @Schema({
   toJSON: {
@@ -22,14 +24,11 @@ export class Usuario {
   @Prop({ required: true })
   senha: string;
 
-  movimentacao_id: string;
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Movimentacao',
+  })
+  movimentacoes?: Movimentacao[];
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);
-
-UsuarioSchema.virtual('Movimentacoes', {
-  ref: Movimentacao.name,
-  localField: 'id',
-  foreignField: 'usuario_id',
-  justOne: false,
-});

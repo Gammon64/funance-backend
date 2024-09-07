@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { TipoMovimentacao } from '../enums/tipomovimentacao.enum';
-import { Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Usuario } from '../../entities/usuario.entity';
+import { TipoMovimentacao } from '../enums/tipomovimentacao.enum';
 import { Parcela } from '../parcelas/entities/parcela.entity';
+
+export type MovimentacaoDocument = HydratedDocument<Movimentacao>;
 
 @Schema({
   toJSON: {
@@ -41,20 +43,12 @@ export class Movimentacao {
 
   @Prop()
   agendamento_id?: string;
+
+  @Prop({ type: Types.ObjectId, ref: 'Usuario' })
+  usuario: Usuario;
+
+  @Prop({ type: Types.ObjectId, ref: 'Parcela' })
+  parcelas?: Parcela[];
 }
 
 export const MovimentacaoSchema = SchemaFactory.createForClass(Movimentacao);
-
-MovimentacaoSchema.virtual('Usuario', {
-  ref: Usuario.name,
-  localField: 'id',
-  foreignField: 'usuario_id',
-  justOne: true,
-});
-
-MovimentacaoSchema.virtual('Parcelas', {
-  ref: Parcela.name,
-  localField: 'id',
-  foreignField: 'movimentacao_id',
-  justOne: true,
-});

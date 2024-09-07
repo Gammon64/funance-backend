@@ -8,15 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { MovimentacoesService } from './movimentacoes.service';
-import { CreateMovimentacoeDto } from './dto/create-movimentacao.dto';
-import { UpdateMovimentacoeDto } from './dto/update-movimentacao.dto';
+import { CreateMovimentacaoDto } from './dto/create-movimentacao.dto';
+import { UpdateMovimentacaoDto } from './dto/update-movimentacao.dto';
 
 @Controller('movimentacoes')
 export class MovimentacoesController {
   constructor(private readonly movimentacoesService: MovimentacoesService) {}
 
   @Post()
-  create(@Body() createMovimentacoeDto: CreateMovimentacoeDto) {
+  create(@Body() createMovimentacoeDto: CreateMovimentacaoDto) {
     return this.movimentacoesService.create(createMovimentacoeDto);
   }
 
@@ -27,19 +27,19 @@ export class MovimentacoesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.movimentacoesService.findOne(+id);
+    return this.movimentacoesService.findOne(id);
   }
 
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateMovimentacoeDto: UpdateMovimentacoeDto,
+    @Body() updateMovimentacoeDto: UpdateMovimentacaoDto,
   ) {
-    return this.movimentacoesService.update(+id, updateMovimentacoeDto);
+    return this.movimentacoesService.update(id, updateMovimentacoeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.movimentacoesService.remove(+id);
+    return this.movimentacoesService.remove(id);
   }
 }

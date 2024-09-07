@@ -1,8 +1,8 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { Usuario } from './entities/usuario.entity';
 import { Model } from 'mongoose';
-import { UsuarioDto } from './dto/usuario.dto';
 import { IRepository } from 'src/db/interface.repository';
+import { UsuarioDto } from './dto/usuario.dto';
+import { Usuario } from './entities/usuario.entity';
 
 export class UsuarioRepository implements IRepository<Usuario> {
   constructor(

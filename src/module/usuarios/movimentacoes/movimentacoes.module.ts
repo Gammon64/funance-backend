@@ -1,12 +1,21 @@
 import { Module } from '@nestjs/common';
-import { MovimentacoesService } from './movimentacoes.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import {
+  Movimentacao,
+  MovimentacaoSchema,
+} from './entities/movimentacao.entity';
 import { MovimentacoesController } from './movimentacoes.controller';
-import { ParcelasModule } from './parcelas/parcelas.module';
+import { MovimentacoesService } from './movimentacoes.service';
 import { ParcelasModule } from './parcelas/parcelas.module';
 
 @Module({
   controllers: [MovimentacoesController],
   providers: [MovimentacoesService],
-  imports: [ParcelasModule],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Movimentacao.name, schema: MovimentacaoSchema },
+    ]),
+    ParcelasModule,
+  ],
 })
 export class MovimentacoesModule {}
