@@ -29,10 +29,7 @@ export class UsuariosService {
   }
 
   async update(id: string, updateUsuarioDto: UsuarioDto) {
-    return this.usuarioModel.updateOne({
-      ...updateUsuarioDto,
-      id,
-    });
+    return this.usuarioModel.findByIdAndUpdate(id, updateUsuarioDto);
   }
 
   async remove(id: string) {
