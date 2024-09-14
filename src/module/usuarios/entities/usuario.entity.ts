@@ -12,9 +12,6 @@ export type UsuarioDocument = HydratedDocument<Usuario>;
   timestamps: true,
 })
 export class Usuario {
-  @Prop({ type: Types.ObjectId })
-  id: string;
-
   @Prop({ required: true })
   nome: string;
 

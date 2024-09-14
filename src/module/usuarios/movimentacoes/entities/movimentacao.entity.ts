@@ -14,9 +14,6 @@ export type MovimentacaoDocument = HydratedDocument<Movimentacao>;
   timestamps: true,
 })
 export class Movimentacao {
-  @Prop({ type: Types.ObjectId })
-  id: string;
-
   @Prop({ required: true })
   usuario_id: string;
 

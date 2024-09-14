@@ -12,9 +12,6 @@ export type ParcelaDocument = HydratedDocument<Parcela>;
   timestamps: true,
 })
 export class Parcela {
-  @Prop({ type: Types.ObjectId })
-  id: string;
-
   @Prop({ required: true })
   numero: number;
 
