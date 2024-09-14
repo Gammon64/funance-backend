@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsuariosModule } from './module/usuarios/usuarios.module';
+import { AuthModule } from './module/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsuariosModule } from './module/usuarios/usuarios.module';
       }),
     }),
     UsuariosModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
