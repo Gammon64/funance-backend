@@ -28,7 +28,7 @@ export class Parcela {
   observacao?: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Movimentacao' })
-  movimentacao: Movimentacao;
+  movimentacao_id: Movimentacao;
 }
 
 export const ParcelaSchema = SchemaFactory.createForClass(Parcela);

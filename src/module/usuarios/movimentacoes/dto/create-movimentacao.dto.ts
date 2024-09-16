@@ -1,13 +1,12 @@
+import { Types } from 'mongoose';
 import { TipoMovimentacao } from '../enums/tipomovimentacao.enum';
 
 export class CreateMovimentacaoDto {
-  usuario_id: string;
-  tipo: TipoMovimentacao;
-  descricao: string;
+  usuario_id: Types.ObjectId;
   valor: number;
-  pagamento: string;
-  assinatura: boolean = false;
+  descricao: string;
+  tipo: TipoMovimentacao;
+  modo_pagamento: string;
   qtd_parcelas: number = 1;
   categoria?: string;
-  agendamento_id?: string;
 }

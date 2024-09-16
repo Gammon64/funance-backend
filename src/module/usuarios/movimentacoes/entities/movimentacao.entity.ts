@@ -15,22 +15,16 @@ export type MovimentacaoDocument = HydratedDocument<Movimentacao>;
 })
 export class Movimentacao {
   @Prop({ required: true })
-  usuario_id: string;
+  valor: number;
+
+  @Prop({ required: true })
+  descricao: string;
 
   @Prop({ required: true, enum: TipoMovimentacao })
   tipo: TipoMovimentacao;
 
   @Prop({ required: true })
-  descricao: string;
-
-  @Prop({ required: true })
-  valor: number;
-
-  @Prop({ required: true })
-  pagamento: string;
-
-  @Prop({ required: true, default: false })
-  assinatura: boolean;
+  modo_pagamento: string;
 
   @Prop({ required: true, default: 1 })
   qtd_parcelas: number;
@@ -38,13 +32,10 @@ export class Movimentacao {
   @Prop()
   categoria?: string;
 
-  @Prop()
-  agendamento_id?: string;
-
   @Prop({ type: Types.ObjectId, ref: 'Usuario' })
-  usuario: Usuario;
+  usuario_id: Usuario;
 
-  @Prop({ type: Types.ObjectId, ref: 'Parcela' })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Parcela' }] })
   parcelas?: Parcela[];
 }
 

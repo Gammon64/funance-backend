@@ -1,6 +1,9 @@
+import { Types } from 'mongoose';
+
 export class CreateParcelaDto {
-  movimentacao_id: string;
   numero: number;
   valor: number;
   data_vencimento: Date;
+  observacao?: string;
+  movimentacao_id: Types.ObjectId;
 }

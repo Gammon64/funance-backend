@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Movimentacao } from '../entities/movimentacao.entity';
 import { CreateParcelaDto } from './dto/create-parcela.dto';
 import { UpdateParcelaDto } from './dto/update-parcela.dto';
@@ -30,11 +30,13 @@ export class ParcelasService {
     parcela.save();
   }
 
-  async createFromMovimentacao(movimentacao: Movimentacao) {
+  async createFromMovimentacao(
+    movimentacao: Movimentacao & { _id: Types.ObjectId },
+  ) {
     // Cria as parcelas
     for (let i = 1; i <= movimentacao.qtd_parcelas; i++) {
-      const parcela = {
-        movimentacao_id: movimentacao.id,
+      const parcela: CreateParcelaDto = {
+        movimentacao_id: movimentacao._id,
         numero: i,
         valor: movimentacao.valor / movimentacao.qtd_parcelas,
         data_vencimento: new Date(),

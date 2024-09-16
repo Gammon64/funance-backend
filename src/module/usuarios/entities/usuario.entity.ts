@@ -22,8 +22,12 @@ export class Usuario {
   senha: string;
 
   @Prop({
-    type: Types.ObjectId,
-    ref: 'Movimentacao',
+    type: [
+      {
+        type: Types.ObjectId,
+        ref: 'Movimentacao',
+      },
+    ],
   })
   movimentacoes?: Movimentacao[];
 }
