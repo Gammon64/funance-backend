@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { CreateMovimentacaoDto } from './dto/create-movimentacao.dto';
 import { UpdateMovimentacaoDto } from './dto/update-movimentacao.dto';
 import { Movimentacao } from './entities/movimentacao.entity';
-import { ParcelasService } from './parcelas/parcelas.service';
+import { ParcelasService } from '../parcelas/parcelas.service';
 
 @Injectable()
 export class MovimentacoesService {

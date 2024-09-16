@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { Movimentacao } from '../../entities/movimentacao.entity';
+import { Movimentacao } from '../../movimentacoes/entities/movimentacao.entity';
 
 export type ParcelaDocument = HydratedDocument<Parcela>;
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Movimentacao } from '../entities/movimentacao.entity';
+import { Movimentacao } from '../movimentacoes/entities/movimentacao.entity';
 import { CreateParcelaDto } from './dto/create-parcela.dto';
 import { UpdateParcelaDto } from './dto/update-parcela.dto';
 import { Parcela } from './entities/parcela.entity';

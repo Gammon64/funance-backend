@@ -6,7 +6,7 @@ import {
 } from './entities/movimentacao.entity';
 import { MovimentacoesController } from './movimentacoes.controller';
 import { MovimentacoesService } from './movimentacoes.service';
-import { ParcelasModule } from './parcelas/parcelas.module';
+import { ParcelasModule } from '../parcelas/parcelas.module';
 
 @Module({
   controllers: [MovimentacoesController],
