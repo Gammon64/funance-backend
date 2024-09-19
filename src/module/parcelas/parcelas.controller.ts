@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ParcelasService } from './parcelas.service';
 import { CreateParcelaDto } from './dto/create-parcela.dto';
 import { UpdateParcelaDto } from './dto/update-parcela.dto';
+import { Types } from 'mongoose';
 
 @Controller('parcelas')
 export class ParcelasController {
@@ -21,8 +23,9 @@ export class ParcelasController {
   }
 
   @Get()
-  findAll() {
-    return this.parcelasService.findAll();
+  findAll(@Query('movimentacao_id') movimentacao_id?: string) {
+    const movimentacao_Oid = new Types.ObjectId(movimentacao_id);
+    return this.parcelasService.findAll(movimentacao_Oid);
   }
 
   @Get(':id')

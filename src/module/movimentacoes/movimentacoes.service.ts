@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ParcelasService } from '../parcelas/parcelas.service';
 import { CreateMovimentacaoDto } from './dto/create-movimentacao.dto';
 import { UpdateMovimentacaoDto } from './dto/update-movimentacao.dto';
 import { Movimentacao } from './entities/movimentacao.entity';
-import { ParcelasService } from '../parcelas/parcelas.service';
 
 @Injectable()
 export class MovimentacoesService {
@@ -14,16 +14,13 @@ export class MovimentacoesService {
     private readonly parcelasService: ParcelasService,
   ) {}
 
-  async findAll() {
-    return this.movimentacaoModel.find().exec();
+  async findAll(usuario_id?: string) {
+    if (usuario_id) return this.movimentacaoModel.find({ usuario_id });
+    return this.movimentacaoModel.find();
   }
 
   async findOne(id: string) {
     return this.movimentacaoModel.findById(id);
-  }
-
-  async findByMovimentacaoId(usuario_id: string) {
-    return this.movimentacaoModel.find({ usuario_id });
   }
 
   async create(createMovimentacaoDto: CreateMovimentacaoDto) {
@@ -31,6 +28,7 @@ export class MovimentacoesService {
     movimentacao.save();
 
     this.parcelasService.createFromMovimentacao(movimentacao);
+    return movimentacao;
   }
 
   async update(id: string, updateMovimentacaoDto: UpdateMovimentacaoDto) {

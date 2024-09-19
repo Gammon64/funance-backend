@@ -13,16 +13,14 @@ export class ParcelasService {
     private readonly parcelaModel: Model<Parcela>,
   ) {}
 
-  async findAll() {
+  async findAll(movimentacao_id?: Types.ObjectId) {
+    if (movimentacao_id)
+      return this.parcelaModel.find({ movimentacao_id }).exec();
     return this.parcelaModel.find().exec();
   }
 
   async findOne(id: string) {
     return this.parcelaModel.findById(id);
-  }
-
-  async findByUsuarioId(usuario_id: string) {
-    return this.parcelaModel.find({ usuario_id });
   }
 
   async create(createParcelaDto: CreateParcelaDto) {
