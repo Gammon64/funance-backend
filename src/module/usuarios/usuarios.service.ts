@@ -11,28 +11,28 @@ export class UsuariosService {
     private readonly usuarioModel: Model<Usuario>,
   ) {}
 
-  async findAll() {
+  async findAll(): Promise<Usuario[]> {
     return this.usuarioModel.find().exec();
   }
 
-  async findOne(id: string) {
-    return this.usuarioModel.findById(id);
+  async findOne(id: string): Promise<Usuario> {
+    return this.usuarioModel.findById(id).exec();
   }
 
-  async findByEmail(email: string) {
-    return this.usuarioModel.findOne({ email });
+  async findByEmail(email: string): Promise<Usuario> {
+    return this.usuarioModel.findOne({ email }).exec();
   }
 
-  async create(createUsuarioDto: UsuarioDto) {
+  async create(createUsuarioDto: UsuarioDto): Promise<Usuario> {
     const createdUsuario = new this.usuarioModel(createUsuarioDto);
     return createdUsuario.save();
   }
 
-  async update(id: string, updateUsuarioDto: UsuarioDto) {
-    return this.usuarioModel.findByIdAndUpdate(id, updateUsuarioDto);
+  async update(id: string, updateUsuarioDto: UsuarioDto): Promise<Usuario> {
+    return this.usuarioModel.findByIdAndUpdate(id, updateUsuarioDto).exec();
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<Usuario> {
     return this.usuarioModel.findByIdAndDelete(id);
   }
 }

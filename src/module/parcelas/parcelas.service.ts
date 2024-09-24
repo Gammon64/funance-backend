@@ -13,19 +13,19 @@ export class ParcelasService {
     private readonly parcelaModel: Model<Parcela>,
   ) {}
 
-  async findAll(movimentacao_id?: Types.ObjectId) {
+  async findAll(movimentacao_id?: Types.ObjectId): Promise<Parcela[]> {
     if (movimentacao_id)
       return this.parcelaModel.find({ movimentacao_id }).exec();
     return this.parcelaModel.find().exec();
   }
 
-  async findOne(id: string) {
-    return this.parcelaModel.findById(id);
+  async findOne(id: string): Promise<Parcela> {
+    return this.parcelaModel.findById(id).exec();
   }
 
-  async create(createParcelaDto: CreateParcelaDto) {
+  async create(createParcelaDto: CreateParcelaDto): Promise<Parcela> {
     const parcela = new this.parcelaModel(createParcelaDto);
-    parcela.save();
+    return parcela.save();
   }
 
   async createFromMovimentacao(
@@ -39,18 +39,19 @@ export class ParcelasService {
         valor: movimentacao.valor / movimentacao.qtd_parcelas,
         data_vencimento: new Date(),
       };
-      await this.create(parcela);
+      const parcela_criada = await this.create(parcela);
+      movimentacao.parcelas.push(parcela_criada);
     }
   }
 
-  async update(id: string, updateParcelaDto: UpdateParcelaDto) {
-    return this.parcelaModel.updateOne({
-      ...updateParcelaDto,
-      id,
-    });
+  async update(
+    id: string,
+    updateParcelaDto: UpdateParcelaDto,
+  ): Promise<Parcela> {
+    return this.parcelaModel.findByIdAndUpdate(id, updateParcelaDto).exec();
   }
 
-  async remove(id: string) {
-    return this.parcelaModel.findByIdAndDelete(id);
+  async remove(id: string): Promise<Parcela> {
+    return this.parcelaModel.findByIdAndDelete(id).exec();
   }
 }

@@ -14,16 +14,18 @@ export class MovimentacoesService {
     private readonly parcelasService: ParcelasService,
   ) {}
 
-  async findAll(usuario_id?: string) {
-    if (usuario_id) return this.movimentacaoModel.find({ usuario_id });
-    return this.movimentacaoModel.find();
+  async findAll(usuario_id?: string): Promise<Movimentacao[]> {
+    if (usuario_id) return this.movimentacaoModel.find({ usuario_id }).exec();
+    return this.movimentacaoModel.find().exec();
   }
 
-  async findOne(id: string) {
-    return this.movimentacaoModel.findById(id);
+  async findOne(id: string): Promise<Movimentacao> {
+    return this.movimentacaoModel.findById(id).exec();
   }
 
-  async create(createMovimentacaoDto: CreateMovimentacaoDto) {
+  async create(
+    createMovimentacaoDto: CreateMovimentacaoDto,
+  ): Promise<Movimentacao> {
     const movimentacao = new this.movimentacaoModel(createMovimentacaoDto);
     movimentacao.save();
 
@@ -31,14 +33,16 @@ export class MovimentacoesService {
     return movimentacao;
   }
 
-  async update(id: string, updateMovimentacaoDto: UpdateMovimentacaoDto) {
-    return this.movimentacaoModel.updateOne({
-      ...updateMovimentacaoDto,
-      id,
-    });
+  async update(
+    id: string,
+    updateMovimentacaoDto: UpdateMovimentacaoDto,
+  ): Promise<Movimentacao> {
+    return this.movimentacaoModel
+      .findByIdAndUpdate(id, updateMovimentacaoDto)
+      .exec();
   }
 
-  async remove(id: string) {
-    return this.movimentacaoModel.findByIdAndDelete(id);
+  async remove(id: string): Promise<Movimentacao> {
+    return this.movimentacaoModel.findByIdAndDelete(id).exec();
   }
 }
