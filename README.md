@@ -32,15 +32,17 @@ Com o projeto em execução, ficarão disponíveis os endpoints:
 
 Autentica um usuário e retorna um token JWT.
 
-```shell
-curl -X 'POST' \
-  'http://localhost:3000/auth/login' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
+```http
+POST /auth/login HTTP/1.1
+Accept: */*
+Content-Type: application/json
+Host: {{host}}
+Content-Length: 54
+
+{
   "email": "admin@funance.com",
   "senha": "admin"
-}'
+}
 ```
 
 ### Para criação e edições de usuário
