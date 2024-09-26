@@ -1,12 +1,12 @@
 services:
-  # backend:
-  #   container_name: funancebackend
-  #   restart: always
-  #   build: ./
-  #   ports:
-  #     - 3000:3000
-  #   external_links:
-  #     - funancedb
+  backend:
+    container_name: funancebackend
+    restart: always
+    build: ./
+    ports:
+      - 3000:3000
+    external_links:
+      - funancedb
   mongo:
     container_name: funancedb
     image: mongo
