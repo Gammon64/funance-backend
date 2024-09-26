@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ParcelasService } from '../parcelas/parcelas.service';
 import { CreateMovimentacaoDto } from './dto/create-movimentacao.dto';
 import { UpdateMovimentacaoDto } from './dto/update-movimentacao.dto';
@@ -22,9 +22,9 @@ export class MovimentacoesService {
    * @param usuario_id - ID do usuário para filtrar as movimentações.
    * @returns Lista de movimentações.
    */
-  async findAll(usuario_id?: string) {
-    if (usuario_id) return this.movimentacaoModel.find({ usuario_id });
-    return this.movimentacaoModel.find();
+  async findAll(usuario_id?: Types.ObjectId) {
+    if (usuario_id) return this.movimentacaoModel.find({ usuario_id }).exec();
+    return this.movimentacaoModel.find().exec();
   }
 
   /**
@@ -56,10 +56,7 @@ export class MovimentacoesService {
    * @returns Movimentação atualizada.
    */
   async update(id: string, updateMovimentacaoDto: UpdateMovimentacaoDto) {
-    return this.movimentacaoModel.updateOne({
-      ...updateMovimentacaoDto,
-      id,
-    });
+    return this.movimentacaoModel.findByIdAndUpdate(id, updateMovimentacaoDto);
   }
 
   /**
