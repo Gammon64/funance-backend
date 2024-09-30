@@ -29,6 +29,9 @@ export class Movimentacao {
   @Prop({ required: true, default: 1 })
   qtd_parcelas: number;
 
+  @Prop({ required: true, default: 30 })
+  intervalo_parcelas: number;
+
   @Prop()
   categoria?: string;
 

@@ -46,6 +46,7 @@ Content-Length: 73
   "tipo": "despesa",
   "modo_pagamento": "credito",
   "qtd_parcelas": 0,
+  "intervalo_parcelas": 0,
   "categoria": "investimento"
 }
 ```
@@ -69,6 +70,7 @@ Content-Length: 75
   "tipo": "despesa",
   "modo_pagamento": "credito",
   "qtd_parcelas": 0,
+  "intervalo_parcelas": 0,
   "categoria": "investimento"
 }
 ```
