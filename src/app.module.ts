@@ -3,8 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsuariosModule } from './module/usuarios/usuarios.module';
 import { AuthModule } from './module/auth/auth.module';
+import { FaturaModule } from './module/fatura/fatura.module';
+import { UsuariosModule } from './module/usuarios/usuarios.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './module/auth/auth.module';
     }),
     UsuariosModule,
     AuthModule,
+    FaturaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

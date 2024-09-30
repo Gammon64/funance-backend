@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { FaturaService } from '../fatura/fatura.service';
 import { Movimentacao } from '../movimentacoes/entities/movimentacao.entity';
 import { CreateParcelaDto } from './dto/create-parcela.dto';
 import { UpdateParcelaDto } from './dto/update-parcela.dto';
@@ -14,6 +15,7 @@ export class ParcelasService {
   constructor(
     @InjectModel(Parcela.name)
     private readonly parcelaModel: Model<Parcela>,
+    private readonly faturaService: FaturaService,
   ) {}
 
   /**
@@ -43,7 +45,11 @@ export class ParcelasService {
    */
   async create(createParcelaDto: CreateParcelaDto) {
     const parcela = new this.parcelaModel(createParcelaDto);
-    parcela.save();
+    await parcela.save();
+    // this.faturaService.findOrCreate(
+    //   parcela.data_vencimento,
+    //   parcela.movimentacao_id.usuario_id,
+    // );
   }
 
   /**

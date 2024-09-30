@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { Fatura } from 'src/module/fatura/entities/fatura.entity';
 import { Movimentacao } from '../../movimentacoes/entities/movimentacao.entity';
 
 export type ParcelaDocument = HydratedDocument<Parcela>;
@@ -29,6 +30,9 @@ export class Parcela {
 
   @Prop({ type: Types.ObjectId, ref: 'Movimentacao' })
   movimentacao_id: Movimentacao;
+
+  @Prop({ type: Types.ObjectId, ref: 'Fatura' })
+  fatura_id: Fatura;
 }
 
 export const ParcelaSchema = SchemaFactory.createForClass(Parcela);
